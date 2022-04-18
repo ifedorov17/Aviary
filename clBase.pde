@@ -1,17 +1,14 @@
-color STDBASECOLOR = #3483FF;
-
-
-class Base{
+public class Base{
   
   float x, y;                                                                        //Position
   int resourceTypeAmount;                                                                     //Amount of resource types
   int[] res;                                                                         //Array for stored resources by type
-  color cl = #3483FF;                                                                //Base color
+  color cl = #50c878;                                                                //Base color
   float size = 40;                                                                   //Base size px
   
   //Constructors
   
-  Base(){
+  Base() {
     Random r = new Random();                                                         //Randomizer
     x = DEFX/5 + (3 * DEFX / 5) * r.nextFloat();                                     //
     y = DEFY/5 + (3 * DEFY / 5) * r.nextFloat();                                     //Random position
@@ -23,7 +20,27 @@ class Base{
       res[i] = 0;
   }
   
+  
+  Base(int x, int y) {
+    this.x = x;
+    this.y = y;
+    
+    resourceTypeAmount = 1;                                                                   //Single resource type by default
+    res = new int[resourceTypeAmount];                                                        //Make stored resources by type array
+    
+    for(int i = 0; i < resourceTypeAmount; i++)
+      res[i] = 0;
+  }
+  
   //Getters
+  
+  float getX() {
+    return this.x;
+  }
+  
+  float getY() {
+    return this.y;
+  }
   
   //Setters
   

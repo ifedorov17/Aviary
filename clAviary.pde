@@ -1,10 +1,8 @@
-color WALLCOLOR = #023600;                                                            //Color of aviary boundaries
+color WALLCOLOR = #116062;                                                            //Color of aviary boundaries
 int WALLTHICKNESS = 20;                                                               //Thickness of aviary boundaries (!!!KEEP MORE THAN MAXIMUM AGENT SPEED!!!)
 
 
-
-
-class Aviary {
+public class Aviary {
   
   int resourceTypeAmount;                                                                      //Amount of resource types
   
@@ -13,12 +11,14 @@ class Aviary {
   
   int agentCounter;                                                                       //Agent counter
   
-  color baseCl = #3483FF;                                                             //Base color (single)
-  color resCl = #FFAA00;                                                              //Resource color TODO: MAKE IT AN ARRAY SIZED resourceTypeAmount TO KEEP COLORS OF EACH RESOURCE TYPE
+  color baseCl = #50c878;                                                             //Base color (single)
+  color resCl = #ff7518;                                                              //Resource color TODO: MAKE IT AN ARRAY SIZED resourceTypeAmount TO KEEP COLORS OF EACH RESOURCE TYPE
   
-  ArrayList<Base> bases;                                                              //
-  ArrayList<Resource> resourcesList;                                                         //
-  ArrayList<Agent> agents;                                                          //ArrayLists TODO: MAKE IT MULTIPLE RESOURCE TYPE COMPATIBLE
+  ArrayList<Base> bases;
+  ArrayList<Resource> resourcesList;
+  ArrayList<Agent> agents;
+  
+  int frameCounter;
   
 
   //Constructors
@@ -29,29 +29,47 @@ class Aviary {
          ){
     
     resourceTypeAmount = 1;                                                                    //Single resource type by default
+    frameCounter = 0;
     
-    baseAmount = argBaseAmnt;                                                           //
-    resourceAmount = argResAmnt;                                                             //
+    baseAmount = argBaseAmnt;
+    resourceAmount = argResAmnt;
     agentCounter = argInitAgentAmnt;                                                      //Set amounts
     
-    bases = new ArrayList<Base>(argBaseAmnt);                                         //
-    resourcesList = new ArrayList<Resource>(argResAmnt);                                     //
+    bases = new ArrayList<Base>(argBaseAmnt);
+    resourcesList = new ArrayList<Resource>(argResAmnt);
     agents = new ArrayList<Agent>(argInitAgentAmnt);                                //Making ArrayLists
     
-    for(int i = 0; i < baseAmount; i++){                                                //
-      bases.add(new Base());                                                          //
-    }                                                                                 //Add bases
+    for(int i = 0; i < baseAmount; i++){
+      bases.add(new Base());
+    }
     
-    for(int i = 0; i < resourceAmount; i++){                                                 //
-      resourcesList.add(new Resource());                                                     //
-    }                                                                                 //Add resources
+    for(int i = 0; i < resourceAmount; i++){
+      resourcesList.add(new Resource());
+    }
     
-    for(int i = 0; i < agentCounter; i++){                                                //
-      agents.add(new Agent());                                                      //
-    }                                                                                 //Add agents 
+    for(int i = 0; i < agentCounter; i++){
+      agents.add(new Agent());
+    }
+  }
+  
+  
+  Aviary(int argBaseAmnt,                                                             //Amount of bases
+         int argResAmnt,                                                              //Amount of resources
+         int argInitAgentAmnt,                                                         //Initial amount of agents
+         int baseX,
+         int baseY,
+         int resX,
+         int resY
+         ) {
+           
+           
   }
   
   //Getters
+  
+  int getFrameCount() {
+    return this.frameCounter;
+  }
   
   //Setters
   
@@ -127,15 +145,12 @@ class Aviary {
         if(idx != -1){
           if (agent.getLoad() < agent.getMaxLoad()){
             agent.addRes(0);
-            if(resourcesList.get(idx).lowerRes()){
-              resourcesList.remove(idx);
-              resourcesList.add(new Resource());
-            }
           }
         }
       }
     });    
     screams();                                                                        //Perform screams
+    frameCounter++;
   }
   
   void moveBase(int baseId, float argX, float argY){
@@ -146,7 +161,8 @@ class Aviary {
   
   void renderBounds(int defX, int defY){                                              //Renders boundaries of aviary
 
-  strokeWeight(WALLTHICKNESS);  stroke(WALLCOLOR);
+  strokeWeight(WALLTHICKNESS);  
+  stroke(WALLCOLOR);
   line(WALLTHICKNESS / 2, WALLTHICKNESS / 2, WALLTHICKNESS / 2, defY - WALLTHICKNESS / 2);
   line(WALLTHICKNESS / 2, WALLTHICKNESS / 2, defX - WALLTHICKNESS / 2, WALLTHICKNESS / 2);
   line(defX - WALLTHICKNESS / 2, defY - WALLTHICKNESS / 2, defX - WALLTHICKNESS / 2, WALLTHICKNESS / 2);

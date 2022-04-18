@@ -8,7 +8,7 @@ int DEFY = 1080;
 boolean pause = false;
 
 
-Aviary AV = new Aviary(1, 3, 500);
+Aviary AV = new Aviary(1, 1, 500);
 
 
 void setup(){
@@ -21,7 +21,9 @@ void setup(){
 void draw(){
   if(!pause){
     AV.run(DEFX, DEFY);
-    fill(#5555ff); text(int(frameRate),5,10);
+    fill(#5555ff); 
+    text(int(frameRate),30,30);
+    text(int(AV.getFrameCount()), 30, 50);
   }
 }
 

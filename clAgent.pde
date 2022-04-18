@@ -1,9 +1,4 @@
-/// TODO;
-/// Various constructors;
-/// Energy / Age <--> speed, needed food etc.
-
-
-class Agent {
+public class Agent {
   
   int status;             //Action status, determines where to go, e.g. if status == 0, then seek base
                         //values: 0 - seek base, 1 -> resourceTypeAmount - seek resource indexed accordingly
