@@ -19,6 +19,7 @@ public class Aviary {
   ArrayList<Agent> agents;
   
   int frameCounter;
+  int changeFrame;   //move resource every changeFrame
   
 
   //Constructors
@@ -53,16 +54,36 @@ public class Aviary {
   }
   
   
-  Aviary(int argBaseAmnt,                                                             //Amount of bases
-         int argResAmnt,                                                              //Amount of resources
+  Aviary(
          int argInitAgentAmnt,                                                         //Initial amount of agents
-         int baseX,
-         int baseY,
-         int resX,
-         int resY
+         float resX,
+         float resY,
+         int changeFrame
          ) {
            
-           
+    resourceTypeAmount = 1;                                                                    //Single resource type by default
+    frameCounter = 0;
+    
+    baseAmount = 1;
+    resourceAmount = 1;
+    agentCounter = argInitAgentAmnt;                                                      //Set amounts
+    this.changeFrame = changeFrame;
+    
+    bases = new ArrayList<Base>(1);
+    resourcesList = new ArrayList<Resource>(1);
+    agents = new ArrayList<Agent>(argInitAgentAmnt);                                //Making ArrayLists
+    
+    for(int i = 0; i < baseAmount; i++){
+      bases.add(new Base(DEFX/2, DEFY/2));  // makes base in the center of the screen
+    }
+    
+    for(int i = 0; i < resourceAmount; i++){
+      resourcesList.add(new Resource(resX, resY));
+    }
+    
+    for(int i = 0; i < agentCounter; i++){
+      agents.add(new Agent());
+    }
   }
   
   //Getters
@@ -151,10 +172,18 @@ public class Aviary {
     });    
     screams();                                                                        //Perform screams
     frameCounter++;
+    if (frameCounter % changeFrame == 0) {
+      moveResourceSymmetric(0);
+    }
   }
   
   void moveBase(int baseId, float argX, float argY){
     bases.get(baseId).setPos(argX, argY);
+  }
+  
+  void moveResourceSymmetric(int resID) {
+    Resource resToMove = resourcesList.get(resID);
+    resToMove.setPos(DEFX - resToMove.getX(), resToMove.getY());;
   }
   
   //Renderers
@@ -188,7 +217,7 @@ public class Aviary {
     renderBase();
     renderRes();
     fill(255);  // инструкция
-    text("ЛКМ - перемещение базы, R - перезапуск, P - пауза", defX / 2 - 100, defY - 6);
+    text("R - перезапуск, P - пауза", defX / 2 - 100, defY - 6);
   }
   
   

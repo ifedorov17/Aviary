@@ -13,7 +13,7 @@ public class Resource{
     size = 40;
   }
   
-  Resource (int x, int y) {
+  Resource (float x, float y) {
     this.x = x;
     this.y = y;
     size = 40;
@@ -35,6 +35,10 @@ public class Resource{
   
   //Setters
   
+  void setPos(float argX, float argY){
+    x = argX;
+    y = argY;
+  }
   //Methods
   
   //Renderers
