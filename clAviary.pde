@@ -88,6 +88,10 @@ public class Aviary {
     return this.frameCounter;
   }
   
+  int getAgentScreamDistance() {
+    return this.agents.get(0).getScrHearDist();
+  }
+  
   //Setters
   
   //Methods

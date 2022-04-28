@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.text.DecimalFormat;
 
 //Setup values
 int DEFX = 1080;     //Screen size
@@ -9,11 +10,22 @@ int DEFY = 1080;
 float iniResX = 540f;   //Resource position
 float iniResY = 200f;
 
+int agentSalary = 10;
+int screamerCost = 3;
+int bagpackCost = 2;
+
+int bagpackCount = 0;
+int screamerCount = 0;
+int iniAgentsCount = 500;
+
+int TotalMoney = iniAgentsCount*agentSalary + bagpackCount*bagpackCost + screamerCount*screamerCost;    //Money spent
+
+int ordered = 1000;   //Ordered Value of mushrooms
+
+
 boolean pause = false;
 
-
-Aviary AV = new Aviary(500, iniResX, iniResY);
-
+Aviary AV = new Aviary(iniAgentsCount, iniResX, iniResY);
 
 void setup(){
    size(1080, 1080); 
@@ -27,15 +39,14 @@ void draw(){
     AV.run(DEFX, DEFY);
     fill(#007dff); 
     text("FPS:" + int(frameRate),30,30);
+    DecimalFormat format = new DecimalFormat("#.##");
     text("Количество сгенерированных кадров: " + int(AV.getFrameCount()), 30, 50);
-    text("Времени прошло: " + float(AV.getFrameCount() / 60), 30, 70);
+    text("Времени прошло: " + format.format(AV.getFrameCount() / 60f), 30, 70);
     text("Текущее расстояние от базы до ресурса: " + Math.round(getDistance()), 30, 110);
+    text("Радиус слышимости агентов: " + AV.getAgentScreamDistance(), 30, 130);
+    text("ОБЩИЕ ЗАТРАТЫ: " + TotalMoney, 30, 150);
   }
 }
-
-/*void mouseClicked(){
-  AV.moveBase(0, mouseX, mouseY);
-}*/
 
 void keyPressed(){
   switch(key){
