@@ -6,15 +6,13 @@ import java.lang.Math;
 int DEFX = 1080;     //Screen size
 int DEFY = 1080;
 
-int iniResX = 257;   //Resource position
-int iniResY = 257;
-
-int iniChangeFrame = 120;   // Changes resource position (symmetrically) if frameCounter % iniChangeFrame
+float iniResX = 540f;   //Resource position
+float iniResY = 200f;
 
 boolean pause = false;
 
 
-Aviary AV = new Aviary(500, iniResX, iniResY, iniChangeFrame);
+Aviary AV = new Aviary(500, iniResX, iniResY);
 
 
 void setup(){
@@ -30,8 +28,8 @@ void draw(){
     fill(#007dff); 
     text("FPS:" + int(frameRate),30,30);
     text("Количество сгенерированных кадров: " + int(AV.getFrameCount()), 30, 50);
-    text("Текущее расстояние от базы до ресурса: " + Math.round(getDistance()), 30, 70);
-    text("Текущая частота смены позиции ресурса: " + iniChangeFrame, 30, 90);
+    text("Времени прошло: " + float(AV.getFrameCount() / 60), 30, 70);
+    text("Текущее расстояние от базы до ресурса: " + Math.round(getDistance()), 30, 110);
   }
 }
 
@@ -43,7 +41,7 @@ void keyPressed(){
   switch(key){
     case 'r':
     case 'R':
-      AV = new Aviary(500, iniResX, iniResY, iniChangeFrame);
+      AV = new Aviary(500, iniResX, iniResY);
       break;
     case 'p':
     case 'P':

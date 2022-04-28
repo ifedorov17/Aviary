@@ -19,8 +19,6 @@ public class Aviary {
   ArrayList<Agent> agents;
   
   int frameCounter;
-  int changeFrame;   //move resource every changeFrame
-  
 
   //Constructors
   
@@ -57,8 +55,7 @@ public class Aviary {
   Aviary(
          int argInitAgentAmnt,                                                         //Initial amount of agents
          float resX,
-         float resY,
-         int changeFrame
+         float resY
          ) {
            
     resourceTypeAmount = 1;                                                                    //Single resource type by default
@@ -67,14 +64,13 @@ public class Aviary {
     baseAmount = 1;
     resourceAmount = 1;
     agentCounter = argInitAgentAmnt;                                                      //Set amounts
-    this.changeFrame = changeFrame;
     
     bases = new ArrayList<Base>(1);
     resourcesList = new ArrayList<Resource>(1);
     agents = new ArrayList<Agent>(argInitAgentAmnt);                                //Making ArrayLists
     
     for(int i = 0; i < baseAmount; i++){
-      bases.add(new Base(DEFX/2, DEFY/2));  // makes base in the center of the screen
+      bases.add(new Base(DEFX/2, DEFY/2 + 300));  // makes base in the center of the screen
     }
     
     for(int i = 0; i < resourceAmount; i++){
@@ -82,7 +78,7 @@ public class Aviary {
     }
     
     for(int i = 0; i < agentCounter; i++){
-      agents.add(new Agent());
+      agents.add(new Agent(DEFX/2, DEFY/2 + 300));
     }
   }
   
@@ -172,9 +168,6 @@ public class Aviary {
     });    
     screams();                                                                        //Perform screams
     frameCounter++;
-    if (frameCounter % changeFrame == 0) {
-      moveResourceSymmetric(0);
-    }
   }
   
   void moveBase(int baseId, float argX, float argY){

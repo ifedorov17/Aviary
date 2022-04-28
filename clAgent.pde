@@ -63,7 +63,46 @@ public class Agent {
     baseDirection = (float)(2 * Math.PI * r.nextFloat());         //Random initial supposed direction to base
     baseDist = DEFX/5;                                      //SAME(essential) initial supposed distance to base
     
-    scrCtrPeak = 7;                                         //Peak for scrCtr, e.g. if scrCtrPeak = 2, scream every third step
+    scrCtrPeak = 10;                                         //Peak for scrCtr, e.g. if scrCtrPeak = 2, scream every third step
+    scrCtr = r.nextInt(scrCtrPeak);                         //Random initial scream counter value
+    
+    scrHearDist = 45;                                       //Fixed perception distance
+  }
+  
+    Agent(float baseX, float baseY){
+    Random r = new Random();                                //Randomizer
+    
+    resourceTypeAmount = 1;                                          //Single resource type by default
+    status = r.nextInt(resourceTypeAmount + 1);                            //Initially seek either base or resource
+    updateColor();                                                 //Update color accordingly
+    
+    x = baseX;           //
+    y = baseY;           //Random coordinates accordingly to aviary dimensions
+    direction = (float)(2 * Math.PI * r.nextFloat());             //Random initial direction
+    speed = (float)(0.6 + 0.4 * r.nextFloat());             //Random speed in range 0.6 -> 1.0
+    
+    
+    resAmount = new int[resourceTypeAmount];                         //
+    resDirection = new float[resourceTypeAmount];                          //
+    resDist = new int[resourceTypeAmount];                           //Resource related variables accordingly to the amount of resource types
+    
+    for(int i = 0; i < resourceTypeAmount; i++){
+      resAmount[i] = 0;                                     //Initially no resources carried
+      resDirection[i] = (float)(2 * Math.PI * r.nextFloat());     //Random initial supposed direction to all resource types
+      resDist[i] = DEFX/5;                                  //SAME(essential) initial supposed distance to all resource types
+    }
+    
+    maxLoad = 1;
+    
+    if(status == 0){
+      resAmount[0] = 1;
+      load = maxLoad;
+    }
+    
+    baseDirection = (float)(2 * Math.PI * r.nextFloat());         //Random initial supposed direction to base
+    baseDist = DEFX/5;                                      //SAME(essential) initial supposed distance to base
+    
+    scrCtrPeak = 10;                                         //Peak for scrCtr, e.g. if scrCtrPeak = 2, scream every third step
     scrCtr = r.nextInt(scrCtrPeak);                         //Random initial scream counter value
     
     scrHearDist = 45;                                       //Fixed perception distance
