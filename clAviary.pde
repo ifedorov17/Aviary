@@ -19,6 +19,7 @@ public class Aviary {
   ArrayList<Agent> agents;
   
   int frameCounter;
+  int order;
 
   //Constructors
   
@@ -55,7 +56,8 @@ public class Aviary {
   Aviary(
          int argInitAgentAmnt,                                                         //Initial amount of agents
          float resX,
-         float resY
+         float resY,
+         int order
          ) {
            
     resourceTypeAmount = 1;                                                                    //Single resource type by default
@@ -78,8 +80,10 @@ public class Aviary {
     }
     
     for(int i = 0; i < agentCounter; i++){
-      agents.add(new Agent(DEFX/2, DEFY/2 + 300));
+      agents.add(new Agent(DEFX/2, DEFY/2 + 300, bagpackCount, screamerCount));
     }
+    
+    this.order = order;
   }
   
   //Getters
@@ -90,6 +94,10 @@ public class Aviary {
   
   int getAgentScreamDistance() {
     return this.agents.get(0).getScrHearDist();
+  }
+  
+  int getCapacity() {
+    return this.agents.get(0).getMaxLoad();
   }
   
   //Setters
@@ -140,7 +148,7 @@ public class Aviary {
   }
     
   
-  void tick(){                                                                        //Performes animation tick
+  void tick() {                                                                        //Performes animation tick
     agents.forEach((agent) -> {                                                       //For each agent
       color curCl = agent.step();                                                       //Perform step, get color from new location
       if(curCl == baseCl){                                                            //If found base
@@ -148,6 +156,7 @@ public class Aviary {
         agent.setBaseDist(0);                                                           //!!!Set supposed distance to base to 0!!!
         agent.updateDir();                                                              //!!!Update direction accordingly to new action flag!!!
         agent.peakScreamCounter();                                                    //Get ready to scream
+        bases.get(0).addRes(0, agent.getLoad());
         agent.dropResources();
       }
       if(curCl == resCl){                                                             //If found resource
@@ -165,22 +174,18 @@ public class Aviary {
         agent.peakScreamCounter();                                                    //Get ready to scream
         if(idx != -1){
           if (agent.getLoad() < agent.getMaxLoad()){
-            agent.addRes(0);
+            agent.load = agent.getMaxLoad();
           }
         }
       }
     });    
     screams();                                                                        //Perform screams
     frameCounter++;
+    
   }
   
   void moveBase(int baseId, float argX, float argY){
     bases.get(baseId).setPos(argX, argY);
-  }
-  
-  void moveResourceSymmetric(int resID) {
-    Resource resToMove = resourcesList.get(resID);
-    resToMove.setPos(DEFX - resToMove.getX(), resToMove.getY());;
   }
   
   //Renderers
@@ -215,7 +220,8 @@ public class Aviary {
     renderRes();
     fill(255);  // инструкция
     text("R - перезапуск, P - пауза", defX / 2 - 100, defY - 6);
+    fill(#007dff); 
+    text("Количество ресурсов на базе: " + bases.get(0).res[0], defX - 250, 90);
   }
-  
   
 }

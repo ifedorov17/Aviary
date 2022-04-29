@@ -29,9 +29,9 @@ public class Agent {
   
   //Constructors
   
-  Agent(){
-    Random r = new Random();                                //Randomizer
+  Agent() {
     
+    Random r = new Random();                                //Randomizer
     
     resourceTypeAmount = 1;                                          //Single resource type by default
     status = r.nextInt(resourceTypeAmount + 1);                            //Initially seek either base or resource
@@ -71,11 +71,11 @@ public class Agent {
   
   
   
-    Agent(float baseX, float baseY){
+    Agent(float baseX, float baseY, int bagpackCount, int screamerCount) {
     Random r = new Random();                                //Randomizer
     
     resourceTypeAmount = 1;                                          //Single resource type by default
-    status = r.nextInt(resourceTypeAmount + 1);                            //Initially seek either base or resource
+    status = 1;                            //Initially seek either base or resource
     updateColor();                                                 //Update color accordingly
     
     x = baseX;           //
@@ -94,7 +94,7 @@ public class Agent {
       resDist[i] = DEFX/5;                                  //SAME(essential) initial supposed distance to all resource types
     }
     
-    maxLoad = 1;
+    maxLoad = 1 + bagpackCount;
     
     if(status == 0){
       resAmount[0] = 1;
@@ -107,7 +107,7 @@ public class Agent {
     scrCtrPeak = 10;                                         //Peak for scrCtr, e.g. if scrCtrPeak = 2, scream every third step
     scrCtr = r.nextInt(scrCtrPeak);                         //Random initial scream counter value
     
-    scrHearDist = 40;                                       //Fixed perception distance
+    scrHearDist = 40 + screamerCount;                                       //Fixed perception distance
   }
   
   //Getters
