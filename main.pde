@@ -23,8 +23,8 @@ int audibilityGrowthCost = 5;
 int capacityGrowthCost = 5;
 
 int capacityGrowth = 0;
-int audibilityGrowth = 15;
-int iniAgentsCount = 1000;
+int audibilityGrowth = 0;
+int iniAgentsCount = 400;
 
 int TotalMoney = iniAgentsCount*agentSalary + capacityGrowth*capacityGrowthCost + audibilityGrowth*audibilityGrowthCost;    //Money spent
 
@@ -65,13 +65,16 @@ void draw(){
     text("ОБЩИЕ ЗАТРАТЫ: " + TotalMoney, 30, 170);
     
     if (AV.bases.get(0).res[0] >= ordered) {  //Order complete
-        pause = true;
+        //pause = true;
         fill(#ff0000); 
         text("ЗАКАЗ ВЫПОЛНЕН. Затраченное время: " + format.format(AV.getFrameCount() / 60f), 30, 210);
         
         //generateReport();
         //appendTextToFile("capacity.csv", capacityGrowth + "," + format.format(AV.getFrameCount() / 60f));
-        appendTextToFile("audibility.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
+        //appendTextToFile("audibility.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
+        appendTextToFile("number.csv", iniAgentsCount + "," + format.format(AV.getFrameCount() / 60f));
+        iniAgentsCount+=100;
+        AV = new Aviary(iniAgentsCount, iniResX, iniResY, ordered);
     }
   }
 }
