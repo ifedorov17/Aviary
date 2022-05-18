@@ -19,14 +19,14 @@ float iniResX = DEFX/2;   //Resource position
 float iniResY = 200f;
 
 int agentSalary = 10;
-int screamerCost = 3;
-int bagpackCost = 2;
+int audibilityGrowthCost = 5;
+int capacityGrowthCost = 5;
 
-int capacityGrowth = 14;
-int audibilityGrowth = 0;
+int capacityGrowth = 0;
+int audibilityGrowth = 15;
 int iniAgentsCount = 1000;
 
-int TotalMoney = iniAgentsCount*agentSalary + capacityGrowth*bagpackCost + audibilityGrowth*screamerCost;    //Money spent
+int TotalMoney = iniAgentsCount*agentSalary + capacityGrowth*capacityGrowthCost + audibilityGrowth*audibilityGrowthCost;    //Money spent
 
 int ordered = 5000;   //Ordered Value of mushrooms
 
@@ -70,7 +70,8 @@ void draw(){
         text("ЗАКАЗ ВЫПОЛНЕН. Затраченное время: " + format.format(AV.getFrameCount() / 60f), 30, 210);
         
         //generateReport();
-        appendTextToFile("capacity.csv", capacityGrowth + "," + format.format(AV.getFrameCount() / 60f));
+        //appendTextToFile("capacity.csv", capacityGrowth + "," + format.format(AV.getFrameCount() / 60f));
+        appendTextToFile("audibility.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
     }
   }
 }
