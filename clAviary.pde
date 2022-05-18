@@ -80,7 +80,7 @@ public class Aviary {
     }
     
     for(int i = 0; i < agentCounter; i++){
-      agents.add(new Agent(DEFX/2, DEFY/2 + 300, bagpackCount, screamerCount));
+      agents.add(new Agent(DEFX/2, DEFY/2 + 300, capacityGrowth, audibilityGrowth));
     }
     
     this.order = order;

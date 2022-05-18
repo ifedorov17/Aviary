@@ -71,7 +71,7 @@ public class Agent {
   
   
   
-    Agent(float baseX, float baseY, int bagpackCount, int screamerCount) {
+    Agent(float baseX, float baseY, int capacityGrowth, int audibilityGrowth) {
     Random r = new Random();                                //Randomizer
     
     resourceTypeAmount = 1;                                          //Single resource type by default
@@ -81,7 +81,7 @@ public class Agent {
     x = baseX;           //
     y = baseY;           //Random coordinates accordingly to aviary dimensions
     direction = (float)(2 * Math.PI * r.nextFloat());             //Random initial direction
-    speed = 1;             //Constatnt speed
+    speed = (float)(0.6 + 0.4 * r.nextFloat());             //Random speed in range 0.6 -> 1.0
     
     
     resAmount = new int[resourceTypeAmount];                         //
@@ -94,7 +94,7 @@ public class Agent {
       resDist[i] = DEFX/5;                                  //SAME(essential) initial supposed distance to all resource types
     }
     
-    maxLoad = 1 + bagpackCount;
+    maxLoad = 1 + capacityGrowth;
     
     if(status == 0){
       resAmount[0] = 1;
@@ -107,7 +107,7 @@ public class Agent {
     scrCtrPeak = 10;                                         //Peak for scrCtr, e.g. if scrCtrPeak = 2, scream every third step
     scrCtr = r.nextInt(scrCtrPeak);                         //Random initial scream counter value
     
-    scrHearDist = 40 + screamerCount;                                       //Fixed perception distance
+    scrHearDist = 40 + audibilityGrowth;                                       //Fixed perception distance
   }
   
   //Getters
