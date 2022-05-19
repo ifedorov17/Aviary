@@ -22,9 +22,9 @@ int agentSalary = 10;
 int audibilityGrowthCost = 5;
 int capacityGrowthCost = 5;
 
-int capacityGrowth = 0;
+int capacityGrowth = 9;
 int audibilityGrowth = 0;
-int iniAgentsCount = 400;
+int iniAgentsCount = 1000;
 
 int TotalMoney = iniAgentsCount*agentSalary + capacityGrowth*capacityGrowthCost + audibilityGrowth*audibilityGrowthCost;    //Money spent
 
@@ -72,8 +72,8 @@ void draw(){
         //generateReport();
         //appendTextToFile("capacity.csv", capacityGrowth + "," + format.format(AV.getFrameCount() / 60f));
         //appendTextToFile("audibility.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
-        appendTextToFile("number.csv", iniAgentsCount + "," + format.format(AV.getFrameCount() / 60f));
-        iniAgentsCount+=100;
+        appendTextToFile("audibility_5.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
+        audibilityGrowth += 5;
         AV = new Aviary(iniAgentsCount, iniResX, iniResY, ordered);
     }
   }
