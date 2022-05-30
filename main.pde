@@ -22,18 +22,19 @@ int agentSalary = 10;
 int audibilityGrowthCost = 5;
 int capacityGrowthCost = 5;
 
-int capacityGrowth = 9;
-int audibilityGrowth = 0;
-int iniAgentsCount = 1000;
-
-int TotalMoney = iniAgentsCount*agentSalary + capacityGrowth*capacityGrowthCost + audibilityGrowth*audibilityGrowthCost;    //Money spent
-
-int ordered = 5000;   //Ordered Value of mushrooms
-
-
 boolean pause = false;
 
-Aviary AV = new Aviary(iniAgentsCount, iniResX, iniResY, ordered);
+//CONFIG
+int iniAgentsCount;
+int capacityGrowth;
+int audibilityGrowth;
+int ordered;
+
+//Ordered Value of mushrooms
+
+int TotalMoney;
+
+Aviary AV;
 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy hh-mm-ss");
 NumberFormat nformat = NumberFormat.getNumberInstance(Locale.UK);
 DecimalFormat format = (DecimalFormat) nformat;
@@ -42,8 +43,17 @@ void setup(){
    size(900, 900); 
    background(0);
    ellipseMode(CENTER);
-   Date now = new Date();
-   String formNow = formatter.format(now);
+   String[] config = loadStrings("config.txt"); //<>//
+   iniAgentsCount= Integer.parseInt(config[1]);
+   capacityGrowth = Integer.parseInt(config[3]);
+   audibilityGrowth = Integer.parseInt(config[5]);
+   ordered = Integer.parseInt(config[7]); 
+   
+   TotalMoney = iniAgentsCount*(agentSalary + capacityGrowth*capacityGrowthCost + audibilityGrowth*audibilityGrowthCost);    //Money spent
+   
+   AV = new Aviary(iniAgentsCount, iniResX, iniResY, ordered);
+   //Date now = new Date();
+   //String formNow = formatter.format(now);
    //output = createWriter("Report " + formNow + ".txt");
  }  
  
@@ -65,16 +75,14 @@ void draw(){
     text("ОБЩИЕ ЗАТРАТЫ: " + TotalMoney, 30, 170);
     
     if (AV.bases.get(0).res[0] >= ordered) {  //Order complete
-        //pause = true;
+        pause = true;
         fill(#ff0000); 
         text("ЗАКАЗ ВЫПОЛНЕН. Затраченное время: " + format.format(AV.getFrameCount() / 60f), 30, 210);
         
         //generateReport();
         //appendTextToFile("capacity.csv", capacityGrowth + "," + format.format(AV.getFrameCount() / 60f));
         //appendTextToFile("audibility.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
-        appendTextToFile("audibility_5.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
-        audibilityGrowth += 5;
-        AV = new Aviary(iniAgentsCount, iniResX, iniResY, ordered);
+        //appendTextToFile("audibility_5.csv", audibilityGrowth + "," + format.format(AV.getFrameCount() / 60f));
     }
   }
 }
@@ -83,6 +91,7 @@ void keyPressed(){
   switch(key){
     case 'r':
     case 'R':
+    if (pause) pause = !pause;
       AV = new Aviary(500, iniResX, iniResY, ordered);
       break;
     case 'p':
